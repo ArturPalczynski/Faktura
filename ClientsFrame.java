@@ -5,6 +5,7 @@
  */
 
 //added to GITHUB
+//second change
 package faktura;
 
 import java.io.BufferedReader;
