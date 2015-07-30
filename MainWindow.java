@@ -1,6 +1,7 @@
 
 package faktura;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,6 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 public class MainWindow extends javax.swing.JFrame {
@@ -167,8 +171,18 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         jButton4.setText("Drukuj");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Pokaż Fakture");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Lista Kotrahentów");
         jButton6.setNextFocusableComponent(fieldImie);
@@ -494,6 +508,32 @@ public class MainWindow extends javax.swing.JFrame {
     private void fieldNIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNIPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldNIPActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        
+        Desktop desktop = Desktop.getDesktop();
+        
+        File outputFile = new File("C://OutputExcel.xlsx");
+        try {
+            desktop.open(outputFile);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       
+        File fileEX = new File("C:\\OutputExcel.xlsx");
+        
+        try {
+            Desktop.getDesktop().print(fileEX);
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
     
     public static void fillTextFields(String[] s){
         
