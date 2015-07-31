@@ -58,7 +58,6 @@ public class MainWindow extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -170,13 +169,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Drukuj");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
         jButton5.setText("Pokaż Fakture");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,9 +221,7 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(jButton5)
-                        .addGap(10, 10, 10)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(83, 83, 83)
                         .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -280,7 +270,6 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton2)
-                            .addComponent(jButton4)
                             .addComponent(jButton5))
                         .addContainerGap())))
         );
@@ -486,11 +475,11 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void fieldNazwaFrimyCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_fieldNazwaFrimyCaretUpdate
         
-        //System.out.println("dupa1");
+        
     }//GEN-LAST:event_fieldNazwaFrimyCaretUpdate
 
     private void fieldNazwaFrimyComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_fieldNazwaFrimyComponentShown
-        //System.out.println("dupa2");
+        
     }//GEN-LAST:event_fieldNazwaFrimyComponentShown
 
     private void fieldNazwaFrimyFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNazwaFrimyFocusGained
@@ -521,19 +510,6 @@ public class MainWindow extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       
-        File fileEX = new File("C:\\OutputExcel.xlsx");
-        
-        try {
-            Desktop.getDesktop().print(fileEX);
-        } catch (IOException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-    }//GEN-LAST:event_jButton4ActionPerformed
     
     public static void fillTextFields(String[] s){
         
@@ -557,7 +533,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

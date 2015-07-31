@@ -80,6 +80,11 @@ public class ClientsFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setText("Szukaj");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Usuń");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -211,7 +216,16 @@ public class ClientsFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
+    //wyszukiwanie rekordu w liście klientów
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        File filCustomers = new File("D:\\klienci.txt");
+            
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
