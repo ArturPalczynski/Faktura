@@ -220,11 +220,62 @@ public class ClientsFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         File filCustomers = new File("D:\\klienci.txt");
+        
+        DefaultListModel modelList = (DefaultListModel) jList1.getModel();
+        
+        String[][] sTable = new String[modelList.size()][5];
+        //System.out.println(sTable.length);
+        
+        int diaX, diaY = 0;
+        
+        try {
+            Scanner sc = new Scanner(filCustomers);
+            sc.useDelimiter("#");
             
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+            
+            
+            for(int out=0;out<sTable.length;out++){
+                
+                for(int in = 0; in<sTable[out].length;in++){
+                    
+                    sTable[out][in] = sc.next();
+                    if(sTable[out][in].equalsIgnoreCase(jTextField1.getText())){
+                        
+                        diaX = in;
+                        diaY = out;
+           
+                        
+                    }
+                    
+                    
+                }
+            }
 
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ClientsFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println(toStringFromStringTable(sTable[diaY]));
+        
+        
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
+    //function that creates one string from string table
+    public String toStringFromStringTable(String[] table){
+        
+        String output = null;
+        
+        for(int index=0; index<table.length;index++){
+            
+            output += table[index];
+            
+            
+        }
+        
+        
+        return output;
+    }
     
     /**
      * @param args the command line arguments
