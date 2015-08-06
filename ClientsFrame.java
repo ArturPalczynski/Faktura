@@ -19,8 +19,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StreamTokenizer;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -221,58 +226,65 @@ public class ClientsFrame extends javax.swing.JFrame {
         
         File filCustomers = new File("D:\\klienci.txt");
         
-        DefaultListModel modelList = (DefaultListModel) jList1.getModel();
+        DefaultListModel listModel = (DefaultListModel) jList1.getModel();
         
-        String[][] sTable = new String[modelList.size()][5];
-        //System.out.println(sTable.length);
         
-        int diaX, diaY = 0;
+        int itemNumber = listModel.getSize();
+        //System.out.println(itemNumber);
         
+        
+        Map<Integer, String[]> itemMap = new HashMap<Integer, String[]>();
+        
+       Scanner scanner;
         try {
-            Scanner sc = new Scanner(filCustomers);
-            sc.useDelimiter("#");
+            
+            
+            scanner = new Scanner(filCustomers);
+            scanner.useDelimiter("#");
             
             
             
-            for(int out=0;out<sTable.length;out++){
+            for(int x=0;scanner.hasNextLine();x++){
                 
-                for(int in = 0; in<sTable[out].length;in++){
-                    
-                    sTable[out][in] = sc.next();
-                    if(sTable[out][in].equalsIgnoreCase(jTextField1.getText())){
-                        
-                        diaX = in;
-                        diaY = out;
-           
-                        
-                    }
-                    
-                    
-                }
+                itemMap.put(x, scanner.nextLine().split("#"));
+                //System.out.println(itemMap.get(x)[0]);
+                
             }
-
+            
             
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ClientsFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
+       
+        for(int i=0;i<itemMap.size();i++){
+            
+            for(String s: itemMap.get(i)){
+                
+                if(s.equalsIgnoreCase(jTextField1.getText())){
+                    
+                    listModel.removeAllElements();
+                    listModel.add(0, toStringFromStringTable(itemMap.get(i)));
+                    
+                }
+                
+            }
+            
+        }
         
-        System.out.println(toStringFromStringTable(sTable[diaY]));
         
-        
+
        
     }//GEN-LAST:event_jButton1ActionPerformed
     //function that creates one string from string table
     public String toStringFromStringTable(String[] table){
         
-        String output = null;
+        String output ="";
         
         for(int index=0; index<table.length;index++){
             
-            output += table[index];
-            
-            
+            output += table[index]+"#";      
         }
-        
         
         return output;
     }
