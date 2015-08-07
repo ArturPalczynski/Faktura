@@ -221,7 +221,7 @@ public class ClientsFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
-    //wyszukiwanie rekordu w liście klientów
+    //serch button functionality
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         File filCustomers = new File("D:\\klienci.txt");
