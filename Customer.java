@@ -14,7 +14,7 @@ public class Customer {
    private String address;
    private String nip;
    private String nazwaFirmy;
-    
+   // 
     
     public Customer(){
         
