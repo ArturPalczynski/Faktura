@@ -265,21 +265,11 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new java.awt.Color(30, 88, 9)" type="code"/>
             </Property>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="1">
-                <Column editable="true" title="Lp." type="java.lang.Double">
-                  <Data value="1.0"/>
-                </Column>
-                <Column editable="true" title="Towar" type="java.lang.String"/>
-                <Column editable="true" title="Cena jednostkowa" type="java.lang.Double"/>
-                <Column editable="true" title="Ilo&#x15b;&#x107;" type="java.lang.Double"/>
-                <Column editable="true" title="Suma" type="java.lang.Double"/>
-                <Column editable="true" title="Rabat %" type="java.lang.Double"/>
-                <Column editable="true" title="Suma po rabacie" type="java.lang.Double"/>
-              </Table>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        { new Double(1.0), null, null, null, null, null, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Lp.&quot;, &quot;Towar&quot;, &quot;&lt;HTML&gt;&lt;CENTER&gt;Cena&lt;BR&gt;jednostkowa&quot;, &quot;Ilo&#x15b;&#x107;&quot;, &quot;Suma&quot;, &quot;Rabat %&quot;, &quot;Suma po rabacie&quot;&#xa;    }&#xa;) {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.Double.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;}" type="code"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="jTable1.getColumnModel().getColumn(2).setHeaderRenderer(new TableRender());">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="jTable1.getTableHeader().setDefaultRenderer(new TableRender());">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="30" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
@@ -291,12 +281,12 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="50" prefWidth="60" resizable="true">
+                <Column maxWidth="-1" minWidth="70" prefWidth="80" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="50" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -319,7 +309,9 @@
               </TableColumnModel>
             </Property>
             <Property name="dragEnabled" type="boolean" value="true"/>
-            <Property name="rowHeight" type="int" value="18"/>
+            <Property name="rowHeight" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="18" type="code"/>
+            </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>

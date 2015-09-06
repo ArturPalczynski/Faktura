@@ -153,7 +153,7 @@ public class MainWindow extends javax.swing.JFrame {
                 { new Double(1.0), null, null, null, null, null, null}
             },
             new String [] {
-                "Lp.", "Towar", "Cena jednostkowa", "Ilość", "Suma", "Rabat %", "Suma po rabacie"
+                "Lp.", "Towar", "<HTML><CENTER>Cena<BR>jednostkowa", "Ilość", "Suma", "Rabat %", "Suma po rabacie"
             }
         ) {
             Class[] types = new Class [] {
@@ -170,10 +170,11 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMaxWidth(30);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(50);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(60);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(70);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(80);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(50);
         }
-        jTable1.getColumnModel().getColumn(2).setHeaderRenderer(new TableRender());
+        jTable1.getTableHeader().setDefaultRenderer(new TableRender());
 
         jButton2.setText("Zapisz");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
