@@ -1,4 +1,4 @@
-//one
+
 package faktura;
 
 import java.io.File;
