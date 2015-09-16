@@ -130,15 +130,15 @@ public class Excel {
         cell1.setCellValue(customer.getNIP());
         
         org.apache.poi.ss.usermodel.Cell cellForKamName = sheet1.getRow(6).createCell(12);
-        cellForKamName.setCellValue("Kamil");
+        cellForKamName.setCellValue("");
         cellForKamName = sheet1.getRow(7).createCell(12);
-        cellForKamName.setCellValue("Dzięcielewski");
+        cellForKamName.setCellValue("");
         cellForKamName = sheet1.getRow(8).createCell(12);
-        cellForKamName.setCellValue("Montaż-Dach");
+        cellForKamName.setCellValue("");
         cellForKamName = sheet1.getRow(9).createCell(12);
-        cellForKamName.setCellValue("Kolejowa 3 87-851 Boniewo");
+        cellForKamName.setCellValue("");
         cellForKamName = sheet1.getRow(10).createCell(12);
-        cellForKamName.setCellValue("88023567748");
+        cellForKamName.setCellValue("");
         
         
         int initialRow = 15;
