@@ -1,12 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-//added to GITHUB
-//second change
-//third change
 package faktura;
 
 import java.io.BufferedReader;
@@ -19,48 +10,36 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StreamTokenizer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Gosia
- */
-//two
 public class ClientsFrame extends javax.swing.JFrame {
 
-    
     Scanner scanner;
     MainWindow mainFrame;
-    
-    
+
     public ClientsFrame() throws FileNotFoundException {
-        
+
         scanner = new Scanner(new File("D://klienci.txt")).useDelimiter("\n");
-        
+
         initComponents();
-        
+
         DefaultListModel model = new DefaultListModel();
-      
-        
-        while(scanner.hasNext()){
-        model.addElement(scanner.next());
+
+        while (scanner.hasNext()) {
+            model.addElement(scanner.next());
         }
 
         jList1.setModel(model);
         scanner.close();
- 
-    }
 
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -135,167 +114,134 @@ public class ClientsFrame extends javax.swing.JFrame {
 
     // popbrać zawartość wybranego obiektu z listy klietów i wpisać ją do excela
     private void listSelection(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listSelection
-        
+
         DefaultListModel model1 = new DefaultListModel();
         model1 = (DefaultListModel) jList1.getModel();
         Customer tCustomer = new Customer();
-        
-        if(evt.getClickCount() == 2){
-            
-            
+
+        if (evt.getClickCount() == 2) {
+
                 ////////////////////////////////////////////////////////////////////////////////////
-                //kod niżej wykonuje się po dwukotnym wciśnięciu lewego przycisku myszki
-                int index = jList1.locationToIndex(evt.getPoint()) ;
-                String[] sTable = new String[5];
-                sTable = model1.get(index).toString().split("#");
+            //kod niżej wykonuje się po dwukotnym wciśnięciu lewego przycisku myszki
+            int index = jList1.locationToIndex(evt.getPoint());
+            String[] sTable = new String[5];
+            sTable = model1.get(index).toString().split("#");
 
-                tCustomer.setName(sTable[0]);
-                tCustomer.setSurename(sTable[1]);
-                tCustomer.setAddress(sTable[2]);
-                tCustomer.setFirm(sTable[3]);
-                tCustomer.setNip(sTable[4]);
+            tCustomer.setName(sTable[0]);
+            tCustomer.setSurename(sTable[1]);
+            tCustomer.setAddress(sTable[2]);
+            tCustomer.setFirm(sTable[3]);
+            tCustomer.setNip(sTable[4]);
 
+            mainFrame.fillTextFields(sTable);
 
-                mainFrame.fillTextFields(sTable);
-                
-                this.dispose();
-                
+            this.dispose();
 
-/*                        
-            //wywołujemy metodę saveExcelCustomer z klasy Excel 
-            Excel addingFromDatabase = new Excel();
-            try {
-                addingFromDatabase.saveExcelCustomer(tCustomer);
-                
-                ///////////////////////////////////////////////////////////////////////////////////
-            } catch (IOException ex) {
-                Logger.getLogger(ClientsFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (BiffException ex) {
-                Logger.getLogger(ClientsFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (WriteException ex) {
-                Logger.getLogger(ClientsFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-*/           
         }
-       
 
-        
+
     }//GEN-LAST:event_listSelection
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         File tFile = new File("D://klienci.txt");
         DefaultListModel lModel = new DefaultListModel();
-        
+
         lModel = (DefaultListModel) jList1.getModel();
-        
+
         int lineIndex = 0;
-        lineIndex  = jList1.getSelectedIndex();
-        
-        try{
-        
-        if(lineIndex == -1){
-            
-            JOptionPane.showMessageDialog(this.getContentPane(), "Zaznacz wpis do usunięcia! ");
-            
-        }else{
-            //usuwamy z listy pozycję która jest zaznaczona
-            lModel.removeElementAt(lineIndex);
-        }
-        }catch(ArrayIndexOutOfBoundsException exeption){    
-        
+        lineIndex = jList1.getSelectedIndex();
+
+        try {
+
+            if (lineIndex == -1) {
+
+                JOptionPane.showMessageDialog(this.getContentPane(), "Zaznacz wpis do usunięcia! ");
+
+            } else {
+                //usuwamy z listy pozycję która jest zaznaczona
+                lModel.removeElementAt(lineIndex);
+            }
+        } catch (ArrayIndexOutOfBoundsException exeption) {
+
             System.out.println("Error");
-        
+
         }
 
         try {
-            
+
             //usuwamy zaznaczoną linijkę z pliku
             removeLine(tFile, lineIndex);
-            
-            
+
         } catch (IOException ex) {
             Logger.getLogger(ClientsFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
     //serch button functionality
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         File filCustomers = new File("D:\\klienci.txt");
-        
+
         DefaultListModel listModel = (DefaultListModel) jList1.getModel();
-        
-        
+
         int itemNumber = listModel.getSize();
         //System.out.println(itemNumber);
-        
-        
+
         Map<Integer, String[]> itemMap = new HashMap<Integer, String[]>();
-        
-       Scanner scanner;
+
+        Scanner scanner;
         try {
-            
-            
+
             scanner = new Scanner(filCustomers);
             scanner.useDelimiter("#");
-            
-            
-            
-            for(int x=0;scanner.hasNextLine();x++){
-                
+
+            for (int x = 0; scanner.hasNextLine(); x++) {
+
                 itemMap.put(x, scanner.nextLine().split("#"));
-                //System.out.println(itemMap.get(x)[0]);
-                
+               
+
             }
-            
-            
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(ClientsFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
-       
-        for(int i=0;i<itemMap.size();i++){
-            
-            for(String s: itemMap.get(i)){
-                
-                if(s.equalsIgnoreCase(jTextField1.getText())){
-                    
+
+        for (int i = 0; i < itemMap.size(); i++) {
+
+            for (String s : itemMap.get(i)) {
+
+                if (s.equalsIgnoreCase(jTextField1.getText())) {
+
                     listModel.removeAllElements();
                     listModel.add(0, toStringFromStringTable(itemMap.get(i)));
-                    
-                }
-                
-            }
-            
-        }
-        
-        
 
-       
+                }
+
+            }
+
+        }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
     //function that creates one string from string table
-    public String toStringFromStringTable(String[] table){
-        
-        String output ="";
-        
-        for(int index=0; index<table.length;index++){
-            
-            output += table[index]+"#";      
+
+    public String toStringFromStringTable(String[] table) {
+
+        String output = "";
+
+        for (int index = 0; index < table.length; index++) {
+
+            output += table[index] + "#";
         }
-        
+
         return output;
     }
-    
-    
-    
-    /**
-     * @param args the command line arguments
-     */
+
+   
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -318,7 +264,7 @@ public class ClientsFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -330,86 +276,71 @@ public class ClientsFrame extends javax.swing.JFrame {
         });
     }
 
-    public void removeLine(File file, int lineNumber) throws IOException{
+    public void removeLine(File file, int lineNumber) throws IOException {
 
-	BufferedReader bReader = new BufferedReader(new FileReader(file));
+        BufferedReader bReader = new BufferedReader(new FileReader(file));
         ArrayList<String> aList = new ArrayList<>();
         String line;
-        int index  = 0;
+        int index = 0;
 
-        
-        while((line = bReader.readLine()) != null){
+        while ((line = bReader.readLine()) != null) {
 
             aList.add(line.trim());
 
         }
-        
-        try{
-        aList.remove(lineNumber);
-        }catch(ArrayIndexOutOfBoundsException e){
+
+        try {
+            aList.remove(lineNumber);
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Error");
         }
-        
-        
-        
-        //aList.remove(aList.size());
-        //System.out.println(aList.size());
-/*            
-        for(int p=0;p<aList.size();p++){
-            
-            
-            System.out.print(aList.get(p));
-            System.out.print(System.lineSeparator());
-            
+
+       
+        bReader.close();
+
+        File tempFile = new File("D://tempC.txt");
+
+        FileWriter fW = new FileWriter(tempFile);
+
+        for (String s : aList) {
+
+            fW.append(s);
+            fW.append(System.lineSeparator());
+
         }
-*/   
-       bReader.close();
 
-       
-       File tempFile = new File("D://tempC.txt");
+        fW.close();
 
-       FileWriter fW = new FileWriter(tempFile);
-       
-       for(String s:aList){
-           
-           fW.append(s);
-           fW.append(System.lineSeparator());
-           
-       }
-       
-       fW.close();
-       
-       copyFiles(tempFile, file);
+        copyFiles(tempFile, file);
 
-       tempFile.delete();
-    
+        tempFile.delete();
+
     }
-    public void copyFiles(File source,File destination) throws FileNotFoundException, IOException{
-        
-        InputStream is=null;
+
+    public void copyFiles(File source, File destination) throws FileNotFoundException, IOException {
+
+        InputStream is = null;
         OutputStream os = null;
-        try{
-        is = new FileInputStream(source);
-        os = new FileOutputStream(destination);
-                
-        byte[] buffer = new byte[1024];
-        int lenght;
-        
-        while((lenght = is.read(buffer)) > 0){
-            
-            os.write(buffer, 0, lenght);
-            
-            }
-        }finally {
-        is.close();
-        os.close();
-     }
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(destination);
 
-        
+            byte[] buffer = new byte[1024];
+            int lenght;
+
+            while ((lenght = is.read(buffer)) > 0) {
+
+                os.write(buffer, 0, lenght);
+
+            }
+        } finally {
+            is.close();
+            os.close();
+        }
+
     }
-    
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -418,4 +349,3 @@ public class ClientsFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
-

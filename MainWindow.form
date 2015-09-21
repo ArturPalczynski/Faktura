@@ -254,6 +254,9 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
+            <Property name="autoCreateRowSorter" type="boolean" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="true" type="code"/>
+            </Property>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f5" green="eb" red="f5" type="rgb"/>
             </Property>
@@ -266,47 +269,11 @@
               <Connection code="new java.awt.Color(30, 88, 9)" type="code"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        { new Double(1.0), null, null, null, null, null, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Lp.&quot;, &quot;Towar&quot;, &quot;&lt;HTML&gt;&lt;CENTER&gt;Cena&lt;BR&gt;jednostkowa&quot;, &quot;Ilo&#x15b;&#x107;&quot;, &quot;Suma&quot;, &quot;Rabat %&quot;, &quot;Suma po rabacie&quot;&#xa;    }&#xa;) {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.Double.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;    }&#xa;}" type="code"/>
+              <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    new Object [][] {&#xa;        { Double.valueOf(1), null, null, null, null, null, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;Lp.&quot;, &quot;Towar&quot;, &quot;&lt;HTML&gt;&lt;CENTER&gt;Cena&lt;BR&gt;jednostkowa&quot;, &quot;Ilo&#x15b;&#x107;&quot;, &quot;Suma&quot;, &quot;Rabat %&quot;, &quot;&lt;HTML&gt;Suma &lt;BR&gt;po rabacie&quot;&#xa;    }&#xa;) {&#xa;    Class[] types = new Class [] {&#xa;        java.lang.Double.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class&#xa;    };&#xa;&#xa;    public Class getColumnClass(int columnIndex) {&#xa;        return types [columnIndex];&#xa;&#xa;    }&#xa;&#xa;}" type="code"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="jTable1.getTableHeader().setDefaultRenderer(new TableRender());">
-              <TableColumnModel selectionModel="0">
-                <Column maxWidth="30" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="70" prefWidth="80" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="50" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-              </TableColumnModel>
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="jTable1.getTableHeader().setDefaultRenderer(new TableRender());&#xa;//jTable1.getColumnModel().getColumn(2).setCellRenderer(new Column4Renderer());&#xa;jTable1.getColumnModel().getColumn(0).setMaxWidth(30);">
+              <TableColumnModel selectionModel="0"/>
             </Property>
             <Property name="dragEnabled" type="boolean" value="true"/>
             <Property name="rowHeight" type="int" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
