@@ -120,16 +120,21 @@ public class Excel {
         cell1.setCellValue(customer.getNIP());
 
         org.apache.poi.ss.usermodel.Cell cellForKamName = sheet1.getRow(6).createCell(12);
-        cellForKamName.setCellValue("Kamil");
+        cellForKamName.setCellValue("");
         cellForKamName = sheet1.getRow(7).createCell(12);
-        cellForKamName.setCellValue("Dzięcielewski");
+        cellForKamName.setCellValue("");
         cellForKamName = sheet1.getRow(8).createCell(12);
-        cellForKamName.setCellValue("Montaż-Dach");
+        cellForKamName.setCellValue("");
         cellForKamName = sheet1.getRow(9).createCell(12);
         cellForKamName.setCellValue("");
         cellForKamName = sheet1.getRow(10).createCell(12);
         cellForKamName.setCellValue("");
+<<<<<<< HEAD
 
+=======
+        
+        
+>>>>>>> 4c9672c9cbd613d8429217ac1148658c69c7d3cb
         int initialRow = 15;
         int cellLP = 2;
         int cellTowar = 3;

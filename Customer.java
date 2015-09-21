@@ -1,7 +1,6 @@
 package faktura;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import jxl.read.biff.BiffException;
 import jxl.write.WriteException;
 
