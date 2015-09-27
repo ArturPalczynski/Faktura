@@ -11,68 +11,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 public class MainWindow extends javax.swing.JFrame {
 
     JTable table;
-    DefaultTableModel model;
+
     int counter = 1;
     ArrayList<Customer> customerList;
     File plikKlient = new File("D://klienci.txt");
     FileWriter writer;
+    MyTableModel modelTable = new MyTableModel();
 
     public MainWindow() throws IOException {
 
         initComponents();
-
-        jTable1.getModel().addTableModelListener(new TableModelListener() {
-
-            double wpis2 = 0;
-            double wpis3 = 0;
-
-            @Override
-            public void tableChanged(TableModelEvent e) {
-
-                switch (e.getColumn()) {
-                    case -1:
-                        System.out.println("Dodano lub usunęto wiersz");
-                        break;
-
-                    case 0:
-                        System.out.println();
-                        break;
-
-                    case 1:
-                        System.out.println();
-                        break;
-
-                    case 2:
-                        System.out.println("Kolumna:" + e.getColumn() + " Wiersz: " + e.getLastRow());
-                        wpis2 = (double) jTable1.getValueAt(e.getLastRow(), e.getColumn());
-                        //System.out.println("Wpisałeś: ");
-
-                        //wpis2 = (double) model.getValueAt(e.getLastRow(), e.getColumn());
-                        break;
-                    case 3:
-                        System.out.println("Kolumna:" + e.getColumn() + " Wiersz: " + e.getLastRow());
-                        //wpis3 = (double) model.getValueAt(e.getLastRow(), e.getColumn());
-                        wpis3 = (double) jTable1.getValueAt(e.getLastRow(), e.getColumn());
-                        break;
-
-                    case 4:
-                        System.out.println("4");
-                        break;
-
-                    default:
-                        System.out.println("Inny");
-                }
-
-            }
-        });
 
     }
 
@@ -91,13 +44,13 @@ public class MainWindow extends javax.swing.JFrame {
         fieldNIP = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Faktura");
@@ -114,7 +67,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel4.setText("Nazwa Firmy:");
 
-        jLabel5.setText("NIP");
+        jLabel5.setText("NIP:");
 
         fieldImie.setColumns(10);
         fieldImie.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
@@ -130,9 +83,19 @@ public class MainWindow extends javax.swing.JFrame {
         fieldNazwosko.setMinimumSize(new java.awt.Dimension(6, 26));
         fieldNazwosko.setNextFocusableComponent(fieldAddress);
         fieldNazwosko.setPreferredSize(new java.awt.Dimension(86, 25));
+        fieldNazwosko.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldNazwoskoActionPerformed(evt);
+            }
+        });
 
         fieldAddress.setColumns(10);
         fieldAddress.setNextFocusableComponent(fieldNazwaFrimy);
+        fieldAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldAddressActionPerformed(evt);
+            }
+        });
 
         fieldNazwaFrimy.setColumns(10);
         fieldNazwaFrimy.setNextFocusableComponent(fieldNIP);
@@ -173,36 +136,6 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setAutoCreateRowSorter(true);
-        jTable1.setBackground(new java.awt.Color(245, 235, 245));
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTable1.setForeground(new java.awt.Color(30, 88, 9));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                { Double.valueOf(1), null, null, null, null, null, null}
-            },
-            new String [] {
-                "Lp.", "Towar", "<HTML><CENTER>Cena<BR>jednostkowa", "Ilość", "Suma", "Rabat %", "<HTML>Suma <BR>po rabacie"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Double.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class, java.lang.Double.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-
-            }
-
-        });
-        jTable1.setToolTipText("");
-        jTable1.setDragEnabled(true);
-        jTable1.setRowHeight(18);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getTableHeader().setDefaultRenderer(new TableRender());
-        //jTable1.getColumnModel().getColumn(2).setCellRenderer(new Column4Renderer());
-        jTable1.getColumnModel().getColumn(0).setMaxWidth(30);
-
         jButton2.setText("Zapisz");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -232,10 +165,13 @@ public class MainWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setText("Usuń wiersz");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        jTable2.setModel(modelTable);
+        jScrollPane2.setViewportView(jTable2);
+
+        jButton4.setText("Usuń wiersz");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
 
@@ -246,85 +182,90 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 30, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 626, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(68, 68, 68)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton1)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(fieldNazwaFrimy, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(fieldAddress, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(fieldNazwosko, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(fieldImie, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(fieldNIP, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6)
-                        .addGap(14, 14, 14))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 664, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jButton5)
-                        .addGap(83, 83, 83)
                         .addComponent(jButton2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton7)))
-                .addContainerGap())
+                        .addComponent(jButton4)
+                        .addGap(49, 49, 49))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldNazwaFrimy, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldNIP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel1))
+                                .addGap(47, 47, 47)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(fieldImie, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldNazwosko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton6)
+                        .addGap(117, 117, 117))))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {fieldAddress, fieldImie, fieldNIP, fieldNazwaFrimy, fieldNazwosko});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton6)
-                        .addComponent(jLabel1))
-                    .addComponent(fieldImie, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldImie, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(fieldNazwosko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fieldNazwaFrimy, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(fieldNIP, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton7)
-                            .addComponent(jButton3))
-                        .addGap(41, 41, 41))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton5))
-                        .addContainerGap())))
+                    .addComponent(jLabel3)
+                    .addComponent(fieldAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldNazwaFrimy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldNIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton2)
+                    .addComponent(jButton5)
+                    .addComponent(jButton4))
+                .addGap(23, 23, 23))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {fieldAddress, fieldImie, fieldNIP, fieldNazwaFrimy, fieldNazwosko});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
     private void fieldImieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldImieActionPerformed
 
@@ -384,7 +325,6 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         Excel newExcel = new Excel();
@@ -397,7 +337,7 @@ public class MainWindow extends javax.swing.JFrame {
         client.setNip(fieldNIP.getText());
 
         try {
-            newExcel.SaveExcel(client, jTable1);
+            newExcel.SaveExcel(client, jTable2);
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidFormatException ex) {
@@ -415,7 +355,6 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -450,18 +389,9 @@ public class MainWindow extends javax.swing.JFrame {
         sC.close();
     }
 
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        //funkcja któradodaje wiersz do tabeli
-        model = (DefaultTableModel) jTable1.getModel();
-        model.addRow(new Object[]{++counter,});
-
-        if (counter <= 0) {
-
-            counter = 0;
-
-        }
+        modelTable.addRow();
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -476,31 +406,13 @@ public class MainWindow extends javax.swing.JFrame {
         }
         clFrame.setVisible(true);
 
-
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-
-        model = (DefaultTableModel) jTable1.getModel();
-        model.removeRow(--counter);
-
-        if (counter <= 0) {
-
-            JOptionPane.showMessageDialog(this.getContentPane(), "Wiersz 0 !");
-            counter = 1;
-            model.addRow(new Object[]{counter,});
-        }
-
-
-    }//GEN-LAST:event_jButton7ActionPerformed
-
     private void FocusHendler(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_FocusHendler
-
 
     }//GEN-LAST:event_FocusHendler
 
     private void fieldNazwaFrimyCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_fieldNazwaFrimyCaretUpdate
-
 
     }//GEN-LAST:event_fieldNazwaFrimyCaretUpdate
 
@@ -510,11 +422,9 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void fieldNazwaFrimyFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNazwaFrimyFocusGained
 
-
     }//GEN-LAST:event_fieldNazwaFrimyFocusGained
 
     private void fieldNazwaFrimyFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fieldNazwaFrimyFocusLost
-
 
     }//GEN-LAST:event_fieldNazwaFrimyFocusLost
 
@@ -535,6 +445,20 @@ public class MainWindow extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void fieldNazwoskoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldNazwoskoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldNazwoskoActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        modelTable.removeRow();
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void fieldAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldAddressActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldAddressActionPerformed
+
     public static void fillTextFields(String[] s) {
 
         fieldImie.setText(s[0]);
@@ -545,7 +469,6 @@ public class MainWindow extends javax.swing.JFrame {
 
     }
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private static javax.swing.JTextField fieldAddress;
     private static javax.swing.JTextField fieldImie;
@@ -555,15 +478,15 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
 }

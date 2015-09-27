@@ -121,7 +121,7 @@ public class ClientsFrame extends javax.swing.JFrame {
 
         if (evt.getClickCount() == 2) {
 
-                ////////////////////////////////////////////////////////////////////////////////////
+            
             //kod niżej wykonuje się po dwukotnym wciśnięciu lewego przycisku myszki
             int index = jList1.locationToIndex(evt.getPoint());
             String[] sTable = new String[5];
@@ -200,7 +200,6 @@ public class ClientsFrame extends javax.swing.JFrame {
             for (int x = 0; scanner.hasNextLine(); x++) {
 
                 itemMap.put(x, scanner.nextLine().split("#"));
-               
 
             }
 
@@ -239,9 +238,8 @@ public class ClientsFrame extends javax.swing.JFrame {
         return output;
     }
 
-   
     public static void main(String args[]) {
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -264,7 +262,6 @@ public class ClientsFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -295,7 +292,6 @@ public class ClientsFrame extends javax.swing.JFrame {
             System.out.println("Error");
         }
 
-       
         bReader.close();
 
         File tempFile = new File("D://tempC.txt");

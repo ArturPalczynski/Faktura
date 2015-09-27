@@ -5,6 +5,7 @@
  */
 package faktura;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -18,10 +19,10 @@ public class TableRender extends JLabel implements TableCellRenderer {
     public TableRender() {
         super();
 
-        setFont(new Font("Verdana", Font.BOLD, 11));
+        setFont(new Font("Curier New", Font.BOLD, 12));
         setHorizontalAlignment(CENTER);
         setBorder(BorderFactory.createEtchedBorder());
-        setPreferredSize(new Dimension(30, 35));
+
     }
 
     @Override
