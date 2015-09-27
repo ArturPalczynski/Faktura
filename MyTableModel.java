@@ -58,20 +58,15 @@ public class MyTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 
-        
         int firstColumn = 0;
         int secondColumn = 1;
         int thirdColumn = 2;
         
         if (columnIndex == firstColumn ) {
-
             listOfObjectArrays.get(rowIndex)[firstColumn] = aValue;
-
         }
         if (columnIndex == secondColumn) {
-
             listOfObjectArrays.get(rowIndex)[secondColumn] = aValue;
-
         }
 
         if ((listOfObjectArrays.get(rowIndex)[firstColumn] != null) && (listOfObjectArrays.get(rowIndex)[secondColumn] != null)) {
